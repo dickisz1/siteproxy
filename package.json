@@ -1,16 +1,20 @@
 {
   "name": "siteproxy",
-  "bin": "index.js",
-  "type": "module",
+  "version": "1.0.0",
+  "main": "api/index.js",
+  "type": "commonjs",
   "engines": {
     "node": ">=22.0.0"
   },
   "scripts": {
     "wrangler-login": "wrangler login",
-    "deploy-cf-worker": "echo 'Deploy to Cloudflare with: wrangler deploy --config wrangler.worker.jsonc' && wrangler deploy --config wrangler.worker.jsonc",
-    "deploy-cf-page": "echo 'Deploy to Cloudflare with: wrangler pages deploy' && wrangler pages deploy"
+    "deploy-cf-worker": "wrangler deploy --config wrangler.worker.jsonc",
+    "deploy-cf-page": "wrangler pages deploy"
   },
-  "dependencies": { },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "@hono/node-server": "^1.8.0"
+  },
   "devDependencies": {
     "wrangler": "^4.25.1"
   }
