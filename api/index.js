@@ -1,27 +1,24 @@
 const { Hono } = require('hono');
 const { handle } = require('@hono/node-server/vercel');
 
-const app = new Hono().basePath('/api');
+// 注意：不要在这里设置 basePath，除非你确定所有流量都带前缀
+const app = new Hono();
 
-// 设置你的暗号 (Token)
 const TOKEN_PREFIX = '/my-secret-path/';
 
-app.all(`${TOKEN_PREFIX}:proto/:host/*`, async (c) => {
-  const { proto, host } = c.req.param();
-  const rest = c.req.path.split(`${TOKEN_PREFIX}${proto}/${host}/`)[1] || '';
-  
-  // 拼接目标 URL (例如: https://www.google.com/search...)
+// 核心逻辑：捕获路径中的协议、主机名和剩余部分
+app.all(`${TOKEN_PREFIX}:proto/:host/:rest{.+$}`, async (c) => {
+  const { proto, host, rest } = c.req.param();
   const targetUrl = `${proto}://${host}/${rest}${c.req.raw.url.split('?')[1] ? '?' + c.req.raw.url.split('?')[1] : ''}`;
 
   try {
-    // 转发请求
     const response = await fetch(targetUrl, {
       method: c.req.method,
       headers: c.req.header(),
-      body: c.req.method !== 'GET' ? await c.req.arrayBuffer() : undefined
+      // 转发 Body 数据（如 POST 请求）
+      body: ['GET', 'HEAD'].includes(c.req.method) ? undefined : await c.req.arrayBuffer()
     });
 
-    // 返回目标网站的内容
     return new Response(response.body, {
       status: response.status,
       headers: response.headers
@@ -31,7 +28,7 @@ app.all(`${TOKEN_PREFIX}:proto/:host/*`, async (c) => {
   }
 });
 
-// 默认 404 处理
-app.notFound((c) => c.text('Invalid path or token. Please use: /api/my-secret-path/https/www.google.com', 404));
+// 你截图中看到的 404 文字就是从这里发出的
+app.notFound((c) => c.text('Invalid path or token. Please check your URL structure.', 404));
 
 module.exports = handle(app);
