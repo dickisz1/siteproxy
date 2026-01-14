@@ -1,6 +1,10 @@
 {
-  "version": 2,
+  "functions": {
+    "api/index.js": {
+      "runtime": "@vercel/node"
+    }
+  },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/bundle.cjs" }
+    { "source": "/(.*)", "destination": "/api/index.js" }
   ]
 }
