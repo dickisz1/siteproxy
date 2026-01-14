@@ -1,6 +1,5 @@
 {
-  "proxy_url": "https://siteproxy-1qd897i72-xiaos-projects-1eaf5362.vercel.app",
+  "proxy_url": "https://siteproxy-ra56eouu4-xiaos-projects-1eaf5362.vercel.app",
   "token_prefix": "/my-secret-path/",
-  "local_listen_port": 5006,
-  "description": "注意：token_prefix 相当于网站密码，请谨慎设置，首尾的斜杠必须保留。"
+  "local_listen_port": 5006
 }
