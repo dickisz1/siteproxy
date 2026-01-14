@@ -1,0 +1,5 @@
+{
+  "proxy_url": "https://siteproxy-eight-beryl.vercel.app",
+  "token_prefix": "/my-secret-path/",
+  "local_listen_port": 5006
+}
