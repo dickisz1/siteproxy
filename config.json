@@ -1,6 +1,0 @@
-{
-  "proxy_url": "https://siteproxy-eight-beryl.vercel.app",
-  "token_prefix": "/my-secret-path/",
-  "local_listen_port": 5006,
-  "description": "注意：token_prefix 相当于网站密码，请谨慎设置，首尾的斜杠必须保留。"
-}
